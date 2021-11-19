@@ -1,3 +1,9 @@
+<?php
+    include 'db-connect.php';
+    $q = $pdo->query('SELECT * FROM warehouse');
+    echo "OK";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +19,10 @@
     </head>
 
     <body>
-            <?php echo $_POST["warehouseID"]; ?>
+            <?php
+		        echo $_POST["warehouseID"];
+		 
+	        ?>
     </body>
 
 </html>
