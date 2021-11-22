@@ -28,6 +28,10 @@
                         <label for="customerID" class="form-label"><b>Customer ID</b></label>
                         <input type="number" class="form-control" name="customerID">
                     </div>
+                    <div class="mb-3">
+                        <label for="order_Count" class="form-label"><b># of Items</b></label>
+                        <input type="number" class="form-control" name="order_Count">
+                    </div>
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
