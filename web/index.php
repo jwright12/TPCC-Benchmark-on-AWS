@@ -13,6 +13,7 @@
     </head>
 
     <body>
+
         <div class="container">
             <div class="hero-unit">
                 <form action="transaction.php" method="post">
@@ -118,7 +119,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button type="submit" class="btn btn-primary">Start Transaction</button>
+                    <button type="submit" class="btn btn-primary" name="submit_button">Start Transaction</button>
                 </form>
                 
             </div> 
