@@ -30,13 +30,16 @@
 
    // This SQL query retrieves all revelant information from Steps 2-4 and prepares for Order
    try {
+
+    $cid = $_POST["customerID"];
+
     $sqlc = "SELECT customer.C_LAST, customer.C_CREDIT, customer.C_DISCOUNT, warehouse.W_TAX, district.D_TAX 
                FROM customer
                JOIN warehouse
                ON warehouse.W_ID = customer.C_W_ID
                JOIN district
                ON district.D_ID = customer.C_D_ID
-               WHERE C_ID ='3';
+               WHERE C_ID ='".$cid."';
             ";
 
     $c = $pdo->query($sqlc);
@@ -83,16 +86,16 @@ try {
     $stmt->bindParam(':O_OL_CNT', $c7);
     $stmt->bindParam(':O_ALL_LOCAL', $c8);
     
-    //$c1 = order id;
-    $c2 = "3";
-    $c3 = "1";
-    $c4 = "3";
+    $c1 = null;
+    $c2 = $_POST["districtID"];  
+    $c3 = $_POST["warehouseID"];  
+    $c4 = $_POST["customerID"];
     $c5 = "4";
     $c6 = "4";
     $c7 = "4";
     $c8 = "4";
 
-    $stmt->execute();
+   $stmt->execute();
     
     } catch(PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -117,9 +120,9 @@ try {
         $stmt->bindParam(':OL_AMOUNT', $o9);
         $stmt->bindParam(':OL_DIST_INFO', $o10);
         
-        $o1 = "4";
-        $o2 = "3";
-        $o3 = "1";
+        $o1 = null;
+        $o2 = $_POST["districtID"];
+        $o3 = $_POST["warehouseID"];
         $o4 = "3";
         $o5 = "4";
         $o6 = "1";
@@ -149,9 +152,9 @@ try {
     $stmt->bindParam(':NO_D_ID', $did);
     $stmt->bindParam(':NO_W_ID', $wid);
  
- //   $oid = ':NO_O_ID' + 1;                  
-    $did = "3";                   
-    $wid = "1"; 
+    $oid = null;                  
+    $did = $_POST["districtID"];               
+    $wid = $_POST["warehouseID"]; 
     
     $stmt->execute();
     
@@ -166,15 +169,24 @@ try {
     $time_start = microtime(true);
     echo "OK";
     $date = date("Y/m/d");
-    // Use microtime() function to measure
-    // ending time
-    $time_end = microtime(true);
+    
+/**
+ * Simple function to replicate PHP 5 behaviour
+ */
+function microtime_float()
+{
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+}
 
-    // Time difference
-    $time = $time_end - $time_start;
+$time_start = microtime_float();
 
-    // Convert to ms
-    $timems = round(microtime(true) * 1000);
+// Sleep for a while
+usleep(100);
+
+$time_end = microtime_float();
+$time = $time_end - $time_start;
+
 ?>
 
 <!DOCTYPE html>
@@ -249,6 +261,8 @@ try {
                         <th scope="col">I_Brand</th>
                         <th scope="col">I_Price </th>
                         <th scope="col">I_Total</th>
+
+
               
                         </tr>
                     </thead>
@@ -270,7 +284,7 @@ try {
                         </tr>
                         <tr>
                         <td colspan="4"></th>
-                        <td colspan="4" name="Processing_Time">Transaction Time: <?php echo $timems ?> ms</th>
+                        <td colspan="4" name="Processing_Time">Transaction Time: <?php echo $time ?> seconds</th>
                         <?php $time_start = "0"; ?>
                         </tr>
                         <?php endwhile; ?>
